@@ -6,8 +6,8 @@ const int LOOP_TIME = 900000;
 
 int main()
 {
-    int inside = 0;
-    int outside = 0;
+    int insidePoints = 0;
+    int outsidePoints = 0;
 
     for (int i = 0; i < LOOP_TIME; i++)
     {
@@ -20,15 +20,15 @@ int main()
 
         if (x * x + y * y > 10000)
         {
-            outside++;
+            outsidePoints++;
         }
         else if (x * x + y * y <= 10000)
         {
-            inside++;
+            insidePoints++;
         }
     }
 
-    double sum = inside + outside;
-    double tmp = 4 * inside;
+    double sum = insidePoints + outsidePoints;
+    double tmp = 4 * insidePoints;
     std::cout << tmp / sum << std::endl;
 }
