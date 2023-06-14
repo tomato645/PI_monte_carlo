@@ -14,8 +14,10 @@ int main()
 
     loopStart = std::chrono::system_clock::now();
 
-    for (int i = 0; i < LOOP_TIME; i++)
+    char progress[10];
+    for (long long int i = 0; i < LOOP_TIME; i++)
     {
+        srand(time(NULL));
         int x = rand() % RADIUS;
         int y = rand() % RADIUS;
 
