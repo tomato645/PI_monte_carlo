@@ -1,12 +1,18 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <ctime>
 
-const int LOOP_TIME = 9000000;
+long long int LOOP_TIME = 1000*1000*1000;
 const int RADIUS = 100;
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argv[1] != NULL)
+    {
+        LOOP_TIME = atoi(argv[1]);
+    }
+
     std::chrono::system_clock::time_point loopStart, loopEnd;
 
     int insidePoints = 0;
@@ -14,8 +20,10 @@ int main()
 
     loopStart = std::chrono::system_clock::now();
 
-    for (int i = 0; i < LOOP_TIME; i++)
+    char progress[10];
+    for (long long int i = 0; i < LOOP_TIME; i++)
     {
+        srand(time(NULL));
         int x = rand() % RADIUS;
         int y = rand() % RADIUS;
 
@@ -27,6 +35,11 @@ int main()
         {
             insidePoints++;
         }
+
+        if (i % (LOOP_TIME / 10) == 0 && i != 0)
+        {
+            std::cout << progress << "実行中" << std::endl;
+        }
     }
 
     loopEnd = std::chrono::system_clock::now();
@@ -37,7 +50,7 @@ int main()
     double calculatedPI = (4.0 * insidePoints) / sum;
 
     std::cout << calculatedPI << std::endl;
-    std::cout << "Looptime: " <<LOOP_TIME << std::endl;
+    std::cout << "Looptime: " << LOOP_TIME << std::endl;
     std::cout << "Time: " << loopElapsed / 1000 << "s" << std::endl;
 
     return 0;
