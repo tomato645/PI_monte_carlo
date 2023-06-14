@@ -3,6 +3,7 @@
 #include <time.h>
 
 const int LOOP_TIME = 900000;
+const int RADIUS = 100;
 
 int main()
 {
@@ -11,24 +12,22 @@ int main()
 
     for (int i = 0; i < LOOP_TIME; i++)
     {
-        int x = rand() % 100;
-        int y = rand() % 100;
+        int x = rand() % RADIUS;
+        int y = rand() % RADIUS;
 
-        // std::cout << x << std::endl;
-        // std::cout << y << std::endl;
-        // std::cout << x * x + y * y << std::endl;
-
-        if (x * x + y * y > 10000)
+        if (x * x + y * y > RADIUS * RADIUS)
         {
             outsidePoints++;
         }
-        else if (x * x + y * y <= 10000)
+        else if (x * x + y * y <= RADIUS * RADIUS)
         {
             insidePoints++;
         }
     }
 
     double sum = insidePoints + outsidePoints;
-    double tmp = 4 * insidePoints;
-    std::cout << tmp / sum << std::endl;
+    double calculatedPI = (4.0 * insidePoints) / sum;
+    std::cout << calculatedPI << std::endl;
+
+    return 0;
 }
