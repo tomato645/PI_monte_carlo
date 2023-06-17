@@ -36,10 +36,9 @@ int usingPow()
     loopEnd = std::chrono::system_clock::now();
     double loopElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(loopEnd - loopStart).count();
     std::cout << "Time for pow: " << loopElapsed << "ms" << std::endl;
-    
+
     return 0;
 }
-
 
 int main()
 {
