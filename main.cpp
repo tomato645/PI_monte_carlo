@@ -3,7 +3,7 @@
 #include <chrono>
 #include <ctime>
 
-long long int LOOP_TIME = 1000 * 1000 * 1000;
+long long int LOOP_TIME = 1000 * 1000;
 const int RADIUS = 1;
 
 int main(int argc, char *argv[])
