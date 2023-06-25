@@ -68,3 +68,4 @@ int main(int argc, char *argv[])
     long double tmp = (4 * insideCount);
     std::cout << "PI = " << tmp / (LOOP_TIME) << std::endl;
 }
+
