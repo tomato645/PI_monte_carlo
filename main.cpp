@@ -25,43 +25,29 @@ int main(int argc, char *argv[])
     }
     else
     {
-        LOOP_TIME = 1000 * 100;
+        LOOP_TIME = 1000 * 1;
         // printf("引数が足りません\n");
         // exit(1);
     }
 
     std::cout << LOOP_TIME << "回実行します。" << std::endl;
 
-    long double x[LOOP_TIME];
-    long double y[LOOP_TIME];
-
+    double x, y;
     for (int i = 0; i < LOOP_TIME; i++)
     {
-        x[i] = makeRand();
-        y[i] = makeRand();
-        // std::cout << "x:" << x[i] << " y:" << y[i] << std::endl;
-        if (i % (LOOP_TIME / 10) == 0)
-        {
-            char test[] = "123456789";
-            std::cout << "\r" << std::flush;
-            for (int j = 0; j < i / (LOOP_TIME / 10); j++)
-            {
-                std::cout << test[j] << std::flush;
-            }
-        }
-    }
-    std::cout << std::endl;
-    std::cout << "配列の生成が終了" << std::endl;
+        x = makeRand();
+        y = makeRand();
 
-    for (int i = 0; i < LOOP_TIME; i++)
-    {
-        long double powed = (x[i] * x[i]) + (y[i] * y[i]);
+        long double powed = (x * x) + (y * y);
         // std::cout << powed << std::endl;
+
         if (powed <= 1.0)
         {
             insideCount++;
         }
+
     }
+    std::cout << std::endl;
 
     std::cout << "insideCount = " << insideCount << std::endl;
     long double tmp = (4 * insideCount);
