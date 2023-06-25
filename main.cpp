@@ -16,6 +16,20 @@ long double makeRand()
     return dis(gen);
 }
 
+int checkProgress(int count, int loop_time)
+{
+    if (count % (loop_time / 10) == 0)
+    {
+        char test[] = "123456789";
+        std::cout << "\r" << std::flush;
+        for (int j = 0; j < count / (loop_time / 10); j++)
+        {
+            std::cout << test[j] << std::flush;
+        }
+    }
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     int LOOP_TIME;
@@ -46,6 +60,7 @@ int main(int argc, char *argv[])
             insideCount++;
         }
 
+        checkProgress(i, LOOP_TIME);
     }
     std::cout << std::endl;
 
