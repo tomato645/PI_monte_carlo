@@ -3,7 +3,7 @@
 #include <string>
 
 // int LOOP_TIME = 10;
-long insideCount = 0;
+bool simpleOutput;
 
 long double makeRand()
 {
@@ -16,54 +16,74 @@ long double makeRand()
     return dis(gen);
 }
 
-int main(int argc, char *argv[])
+int checkProgress(int count, int loop_time)
 {
-    int LOOP_TIME;
-    if (argc >= 2)
+    if (count % (loop_time / 10) == 0)
     {
-        LOOP_TIME = atoi(argv[1]);
-    }
-    else
-    {
-        LOOP_TIME = 1000 * 100;
-        // printf("引数が足りません\n");
-        // exit(1);
-    }
-
-    std::cout << LOOP_TIME << "回実行します。" << std::endl;
-
-    long double x[LOOP_TIME];
-    long double y[LOOP_TIME];
-
-    for (int i = 0; i < LOOP_TIME; i++)
-    {
-        x[i] = makeRand();
-        y[i] = makeRand();
-        // std::cout << "x:" << x[i] << " y:" << y[i] << std::endl;
-        if (i % (LOOP_TIME / 10) == 0)
+        char test[] = "123456789";
+        std::cout << "\r" << std::flush;
+        for (int j = 0; j < count / (loop_time / 10); j++)
         {
-            char test[] = "123456789";
-            std::cout << "\r" << std::flush;
-            for (int j = 0; j < i / (LOOP_TIME / 10); j++)
-            {
-                std::cout << test[j] << std::flush;
-            }
+            std::cout << test[j] << std::flush;
         }
     }
-    std::cout << std::endl;
-    std::cout << "配列の生成が終了" << std::endl;
+    return 0;
+}
 
+double monte(int LOOP_TIME)
+{
+    double x, y;
+    long insideCount = 0;
     for (int i = 0; i < LOOP_TIME; i++)
     {
-        long double powed = (x[i] * x[i]) + (y[i] * y[i]);
+        x = makeRand();
+        y = makeRand();
+
+        long double powed = (x * x) + (y * y);
         // std::cout << powed << std::endl;
+
         if (powed <= 1.0)
         {
             insideCount++;
         }
-    }
 
-    std::cout << "insideCount = " << insideCount << std::endl;
+        if (!simpleOutput){checkProgress(i, LOOP_TIME);};
+    }
+    if (!simpleOutput){std::cout << std::endl;};
+
+    if (!simpleOutput){std::cout << "insideCount = " << insideCount << std::endl;}
     long double tmp = (4 * insideCount);
     std::cout << "PI = " << tmp / (LOOP_TIME) << std::endl;
+
+    return 0;
+}
+
+int main(int argc, char *argv[])
+{
+    int LOOP_TIME;
+    int CalculateTimes;
+    if (argc >= 3)
+    {
+        LOOP_TIME = atoi(argv[1]);
+        CalculateTimes = atoi(argv[2]);
+        if (std::string(argv[3]) == "true")
+        {
+            simpleOutput = true;
+        }
+    }
+    else
+    {
+        LOOP_TIME = 1000;
+        CalculateTimes = 1;
+        bool simpleOutput = false;
+        // printf("引数が足りません\n");
+        // exit(1);
+    }
+
+    std::cout << LOOP_TIME << "回を" << CalculateTimes << "回実行します。" << std::endl;
+
+    for (int i = 0; i < CalculateTimes; i++)
+    {
+        monte(LOOP_TIME);
+    }
 }
