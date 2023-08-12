@@ -2,7 +2,6 @@
 #include <random>
 #include <string>
 
-// int LOOP_TIME = 10;
 bool simpleOutput;
 
 long double makeRand()
@@ -16,8 +15,12 @@ long double makeRand()
     return dis(gen);
 }
 
-int checkProgress(int count, int loop_time)
+void checkProgress(int count, int loop_time)
 {
+    if (loop_time < 10)
+    {
+        return;
+    }
     if (count % (loop_time / 10) == 0)
     {
         char test[] = "123456789";
@@ -27,7 +30,6 @@ int checkProgress(int count, int loop_time)
             std::cout << test[j] << std::flush;
         }
     }
-    return 0;
 }
 
 double monte(int LOOP_TIME)
@@ -47,42 +49,66 @@ double monte(int LOOP_TIME)
             insideCount++;
         }
 
-        if (!simpleOutput){checkProgress(i, LOOP_TIME);};
+        if (!simpleOutput)
+        {
+            checkProgress(i, LOOP_TIME);
+        };
     }
-    if (!simpleOutput){std::cout << std::endl;};
+    if (!simpleOutput)
+    {
+        std::cout << std::endl;
+    }
 
-    if (!simpleOutput){std::cout << "insideCount = " << insideCount << std::endl;}
+    if (!simpleOutput)
+    {
+        std::cout << "insideCount = " << insideCount << std::endl;
+    }
     long double tmp = (4 * insideCount);
     std::cout << "PI = " << tmp / (LOOP_TIME) << std::endl;
 
     return 0;
 }
 
+bool str2bool(std::string str)
+{
+    if (str == "true")
+    {
+        return true;
+    }
+    if (str == "false")
+    {
+        return false;
+    }
+    std::cout << "\e[31mtrue or false\e[0m" << std::endl;
+    exit(1);
+}
+
 int main(int argc, char *argv[])
 {
     int LOOP_TIME;
-    int CalculateTimes;
-    if (argc >= 3)
+    int calculateTimes;
+    if (argc == 1)
+    {
+        LOOP_TIME = 1000;
+        calculateTimes = 1;
+        simpleOutput = false;
+    }
+    else if (argc == 4)
     {
         LOOP_TIME = atoi(argv[1]);
-        CalculateTimes = atoi(argv[2]);
-        if (std::string(argv[3]) == "true")
-        {
-            simpleOutput = true;
-        }
+        calculateTimes = atoi(argv[2]);
+        simpleOutput = str2bool(argv[3]);
     }
     else
     {
-        LOOP_TIME = 1000;
-        CalculateTimes = 1;
-        bool simpleOutput = false;
-        // printf("引数が足りません\n");
-        // exit(1);
+        std::cout << "\e[31mIt seems missing arguments.\e[0m" << std::endl;
+        std::cout << "\e[3mUsage: ./main [int: loop time] [int: calculation times] [bool: simpleOutput]\e[0m" << std::endl;
+        exit(1);
     }
 
-    std::cout << LOOP_TIME << "回を" << CalculateTimes << "回実行します。" << std::endl;
+    std::cout << LOOP_TIME << "回を" << calculateTimes << "回実行します。" << std::endl;
 
-    for (int i = 0; i < CalculateTimes; i++)
+    for (int i = 0; i < calculateTimes; i++)
     {
         monte(LOOP_TIME);
     }
